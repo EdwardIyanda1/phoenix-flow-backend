@@ -1,9 +1,22 @@
 const jsonServer = require('json-server');
-const db = { members: [], supporters: [] };
+const { createClient } = require('@vercel/kv');
+
 try {
+  const db = { members: [], supporters: [] };
+  const kv = createClient({
+    url: process.env.KV_REST_API_URL,
+    token: process.env.KV_REST_API_TOKEN,
+  });
+
+  kv.get('db').then(data => {
+    if (data) Object.assign(db, data);
+    console.log('Loaded db from KV');
+  }).catch(err => console.error('KV load error:', err));
+
   const server = jsonServer.create();
   const router = jsonServer.router(db);
   const middlewares = jsonServer.defaults({ readOnly: false });
+
   server.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', 'https://phoenixflow.vercel.app');
     res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS');
@@ -11,16 +24,24 @@ try {
     if (req.method === 'OPTIONS') return res.status(200).send();
     next();
   });
+
   server.use(middlewares);
   server.use(jsonServer.rewriter({
     '/api/*': '/$1',
     '/blog/:resource/:id/show': '/:resource/:id'
   }));
   server.use(router);
+
   server.use((req, res, next) => {
+    if (['POST', 'PUT', 'PATCH'].includes(req.method)) {
+      setTimeout(() => {
+        kv.set('db', db).catch(err => console.error('KV save error:', err));
+      }, 0);
+    }
     console.log(`${req.method} ${req.url} - Status: ${res.statusCode}`);
     next();
   });
+
   module.exports = server;
 } catch (error) {
   console.error('Server initialization error:', error);
