@@ -1,0 +1,24 @@
+14:25:14.830 
+Running build in Washington, D.C., USA (East) – iad1
+14:25:14.830 
+Build machine configuration: 2 cores, 8 GB
+14:25:14.845 
+Cloning github.com/EdwardIyanda1/phoenix-flow-backend (Branch: main, Commit: d915312)
+14:25:14.853 
+Skipping build cache, deployment was triggered without cache.
+14:25:15.121 
+Cloning completed: 276.000ms
+14:25:15.556 
+Running "vercel build"
+14:25:15.976 
+Vercel CLI 48.1.6
+14:25:16.160 
+WARN! Due to `builds` existing in your configuration file, the Build and Development Settings defined in your Project Settings will not apply. Learn More: https://vercel.link/unused-build-settings
+14:25:16.671 
+Error: Node.js Version "18.x" is discontinued and must be upgraded. Please set "engines": { "node": "22.x" } in your `package.json` file to use Node.js 22.
+14:25:16.672 
+Learn More: http://vercel.link/node-version
+
+
+
+#my build logs@latest
