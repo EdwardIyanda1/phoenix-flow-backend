@@ -8,11 +8,12 @@ try {
 
   // Explicit CORS configuration
   server.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'https://phoenixflow.vercel.app'); // Specific origin
+    res.header('Access-Control-Allow-Origin', 'https://phoenixflow.vercel.app');
     res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
     if (req.method === 'OPTIONS') {
-      return res.sendStatus(200);
+      res.status(200).send();
+      return;
     }
     next();
   });

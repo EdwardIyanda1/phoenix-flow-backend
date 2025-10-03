@@ -2,14 +2,23 @@
   "version": 2,
   "builds": [
     {
-      "src": "dist/**",
-      "use": "@vercel/static"
+      "src": "api/server.js",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "api/server.js",
+      "methods": ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+      "headers": {
+        "Access-Control-Allow-Origin": "https://phoenixflow.vercel.app",
+        "Access-Control-Allow-Methods": "GET,POST,PUT,PATCH,DELETE,OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type,Authorization"
+      }
     }
-  ]
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  }
 }
