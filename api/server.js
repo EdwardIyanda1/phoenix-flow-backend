@@ -1,7 +1,7 @@
 // api/server.js
 const jsonServer = require('json-server');
 
-// Use in-memory db (Vercel can't write to files at runtime)
+// In-memory db (Vercel can't write to files at runtime)
 const db = {
   members: [],
   supporters: []
@@ -9,7 +9,7 @@ const db = {
 
 try {
   const server = jsonServer.create();
-  const router = jsonServer.router(db);  // Use in-memory db object
+  const router = jsonServer.router(db); // Use in-memory db
   const middlewares = jsonServer.defaults({ readOnly: false });
 
   // CORS for frontend
