@@ -1,10 +1,15 @@
 {
   "name": "phoenix-flow-backend",
   "version": "1.0.0",
+  "main": "api/server.js",
   "scripts": {
+    "dev": "json-server --watch db.json --port 3001",
     "start": "node api/server.js"
   },
   "dependencies": {
     "json-server": "^0.17.4"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
